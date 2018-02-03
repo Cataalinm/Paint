@@ -66,7 +66,7 @@ def scrierecsv():
     global flag
     print(flag)
     listachei=list(a[0].keys())
-    ordineamea=[-1,0,1,2,-2,5,6,7,8,9,3,4]                       #schimbarea ordinii coloanelor in csv 
+    ordineamea=[7,6,0,1,10,5,2,11,8,9,3,4]                       #schimbarea ordinii coloanelor in csv 
     listachei=[listachei[i] for i in ordineamea]
     filename='C:/Users/Cataa/Desktop/foldernou.csv'
    

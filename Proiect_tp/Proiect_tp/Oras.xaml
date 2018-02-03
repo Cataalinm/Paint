@@ -35,16 +35,17 @@
                 </TextBox.Background>
             </TextBox>
         </Viewbox>
-        <Button Content="Inapoi la pagina principala" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Bottom" Width="Auto" Height="Auto" Click="Button_Click" RenderTransformOrigin="0.503,0.504" Margin="293.8,178.6,10.6,10" Grid.Column="1" MaxHeight="50" MaxWidth="200"/>
+        <Button Content="Inapoi la pagina principala" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Top" Width="Auto" Height="Auto" Click="Button_Click" RenderTransformOrigin="0.503,0.504" Margin="0,217.2,9.6,0" Grid.Column="1" MaxHeight="50" MaxWidth="200"/>
         <DataGrid Name="dataGrid1" AutoGenerateColumns="False" Grid.Column="1" HorizontalAlignment="Stretch" Height="Auto" Margin="9.8,10.2,10.6,10.4" Grid.Row="1" VerticalAlignment="Stretch" Width="Auto" MaxWidth="600">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Ora masurarii" Binding="{Binding Path=A}" MinWidth="50" />
                 <DataGridTextColumn Header="Oras" Binding="{Binding Path=B}" MinWidth="50" />
                 <DataGridTextColumn Header="Tara" Binding="{Binding Path=C}" MinWidth="50" />
-                <DataGridTextColumn Header="Temperatura masurata" Binding="{Binding Path=D}" MinWidth="50" />
-                <DataGridTextColumn Header="Temperatura resimtita" Binding="{Binding Path=E}" MinWidth="50" />
-
+                <DataGridTextColumn Header="Temperatura masurata" Binding="{Binding Path=D}" MinWidth="50"/>
+                <DataGridTextColumn Header="Temperatura resimtita" Binding="{Binding Path=E}" MinWidth="50"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Label Name="TempRM" Content="Temperatura  de azi la ora 12" Grid.Column="1" HorizontalAlignment="Left" Margin="32.8,101.2,0,0" Grid.Row="2" VerticalAlignment="Top" Width="166" Visibility="Hidden"/>
+        <TextBox Name="TextbRM" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="203.8,103.2,0,0" Grid.Row="2" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Visibility="Hidden"/>
     </Grid>
 </Window>

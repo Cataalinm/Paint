@@ -20,7 +20,7 @@ def scrierecsv(a):
     ordineamea=[-1,1,2,0]                       #schimbarea ordinii coloanelor in csv 
     listachei=[listachei[i] for i in ordineamea]
     file_exists = os.path.isfile(filename)
-    with open(filename, 'a') as csvfile:
+    with open(filename, 'ab') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=listachei)
         if(flag==0):
             writer.writeheader()

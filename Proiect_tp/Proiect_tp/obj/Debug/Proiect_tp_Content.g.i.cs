@@ -10,5 +10,6 @@
 
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("script.py")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("script2.py")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("script3.py")]
 
 

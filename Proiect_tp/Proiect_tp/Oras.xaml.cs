@@ -84,12 +84,11 @@ namespace Proiect_tp
         public Oras()
         {
             InitializeComponent();
-            LoadLineChartData();
-            dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\Proiect_tp\Proiect_tp\example.csv");
+            
         }
-        private void LoadLineChartData()
+        public void LoadLineChartData()
         {
-            ReadCSV(@"C:\Users\Cataa\Desktop\Proiect_tp\Proiect_tp\example.csv");
+            ReadCSV(@"C:\Users\Cataa\Desktop\experiment.csv");
             string[] data = this.line1.Split(',');
             string[] data2 = this.line2.Split(',');
             string[] data3 = this.line3.Split(',');
@@ -104,20 +103,21 @@ namespace Proiect_tp
             string[] data12 = this.line12.Split(',');
 
             //int x = Int32.Parse(data2[3]);
+            //textb.Text = data10[3];
             ((LineSeries)Oraschart.Series[0]).ItemsSource =
                 new KeyValuePair<string, int>[]{
-            new KeyValuePair<string, int>("SM", Int32.Parse(data[2])),
-            new KeyValuePair<string, int>("IS", Int32.Parse(data2[2])),
-            new KeyValuePair<string, int>("CJ", Int32.Parse(data3[2])),
-            new KeyValuePair<string, int>("TM", Int32.Parse(data4[2])),
-            new KeyValuePair<string, int>("MC", Int32.Parse(data5[2])),
-            new KeyValuePair<string, int>("SB", Int32.Parse(data6[2])),
-            new KeyValuePair<string, int>("BV", Int32.Parse(data7[2])),
-            new KeyValuePair<string, int>("TM", Int32.Parse(data8[2])),
-            new KeyValuePair<string, int>("RV", Int32.Parse(data9[2])),
-            new KeyValuePair<string, int>("CV", Int32.Parse(data10[2])),
-            new KeyValuePair<string, int>("B", Int32.Parse(data11[2])),
-            new KeyValuePair<string, int>("CT", Int32.Parse(data12[2])) };
+            new KeyValuePair<string, int>("SM", Int32.Parse(data[3])),
+            new KeyValuePair<string, int>("IS", Int32.Parse(data2[3])),
+            new KeyValuePair<string, int>("CJ", Int32.Parse(data3[3])),
+            new KeyValuePair<string, int>("TG", Int32.Parse(data4[3])),
+            new KeyValuePair<string, int>("MC", Int32.Parse(data5[3])),
+            new KeyValuePair<string, int>("SB", Int32.Parse(data6[3])),
+            new KeyValuePair<string, int>("BV", Int32.Parse(data7[3])),
+            new KeyValuePair<string, int>("TM", Int32.Parse(data8[3])),
+            new KeyValuePair<string, int>("RV", Int32.Parse(data9[3])),
+            new KeyValuePair<string, int>("CV", Int32.Parse(data10[3])),
+            new KeyValuePair<string, int>("B", Int32.Parse(data11[3])),
+            new KeyValuePair<string, int>("CT", Int32.Parse(data12[3])) };
         }
         void ShowHideDetails(object sender, RoutedEventArgs e)
         {
@@ -126,12 +126,19 @@ namespace Proiect_tp
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
+            TempRM.Visibility = Visibility.Hidden;
+            TextbRM.Visibility = Visibility.Hidden;
 
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            LoadLineChartData();
         }
     }
 

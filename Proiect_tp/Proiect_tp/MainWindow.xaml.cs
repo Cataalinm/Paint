@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Drawing;
+using System.Threading;
+using System.ComponentModel;
 namespace Proiect_tp
 {
     /// <summary>
@@ -22,13 +24,41 @@ namespace Proiect_tp
     /// </summary>
     public partial class MainWindow : Window
     {
+        int ok = 1;
+        private readonly BackgroundWorker worker = new BackgroundWorker();
+        private void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            // run all background tasks here
+            var py = Python.CreateEngine();
+            if (ok == 1)
+            {
+                py.ExecuteFile("script.py");
+                MessageBox.Show("Datele din trecut au fost scrise in fisier");
+            }
+            if (ok == 2)
+            {
+                py.ExecuteFile("script2.py");
+                MessageBox.Show("Datele live au fost scrise in fisier");
+            }
+            if (ok == 3)
+            {
+                py.ExecuteFile("script3.py");
+                MessageBox.Show("Temperatura pentru Ramnicu Valcea a fost calculata");
+            }
+        }
+
+        private void worker_RunWorkerCompleted(object sender,
+                                               RunWorkerCompletedEventArgs e)
+        {
+            //update ui once worker complete his work
+            
+        }
         public class Orase
         {
             public string Locatie { get; set; }
             public string Tempr { get; set; }
             public string Temps { get; set; }
             public string Ora { get; set; }
-
             public Orase(string locatie, string tempr, string temps, string ora)
             {
                 Locatie = locatie;
@@ -66,6 +96,8 @@ namespace Proiect_tp
         public MainWindow()
         {
             InitializeComponent();
+            worker.DoWork += worker_DoWork;
+            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
         }
         
         Oras oras = new Oras();
@@ -76,11 +108,16 @@ namespace Proiect_tp
             oras.Show();
             oras.img.Source = new BitmapImage(new Uri("images/RamnicuValcea.jpg", UriKind.Relative));
             oras.Localitate.Text = "Ramnicu Valcea";
-            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\Proiect_tp\Proiect_tp\example.csv");
+            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\experiment.csv");
             var list = new List<DataObject>(); //ObservableCollection<DataObject>();
             string[] data2 = oras.line9.Split(',');
             list.Add(new DataObject() { A = data2[0], B = data2[1], C = data2[2], D = data2[3],E=data2[4] });
             oras.dataGrid1.ItemsSource = list;
+            string [] linii=File.ReadAllLines(@"C: \Users\Cataa\Desktop\Testul.csv",Encoding.UTF8);
+            oras.TextbRM.Text = linii[0];
+            oras.TextbRM.Visibility = Visibility.Visible;
+            oras.TempRM.Visibility = Visibility.Visible;
+            
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -89,7 +126,7 @@ namespace Proiect_tp
             oras.Show();
             oras.img.Source = new BitmapImage(new Uri("images/Brasov.jpg", UriKind.Relative));
             oras.Localitate.Text = "Brasov";
-            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\Proiect_tp\Proiect_tp\example.csv");
+            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\experiment.csv");
             var list = new List<DataObject>(); //ObservableCollection<DataObject>();
             string[] data2 = oras.line7.Split(',');
             list.Add(new DataObject() { A = data2[0], B = data2[1], C = data2[2], D = data2[3], E=data2[4] });
@@ -102,7 +139,7 @@ namespace Proiect_tp
             oras.Show();
             oras.img.Source = new BitmapImage(new Uri("images/MiercureaCiuc.jpg", UriKind.Relative));
             oras.Localitate.Text = "Miercurea Ciuc";
-            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\Proiect_tp\Proiect_tp\example.csv");
+            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\experiment.csv");
             var list = new List<DataObject>(); //ObservableCollection<DataObject>();
             string[] data2 = oras.line5.Split(',');
             list.Add(new DataObject() { A = data2[0], B = data2[1], C = data2[2], D = data2[3], E = data2[4] });
@@ -114,7 +151,7 @@ namespace Proiect_tp
             oras.Show();
             oras.img.Source = new BitmapImage(new Uri("images/Sibiu.jpg", UriKind.Relative));
             oras.Localitate.Text = "Sibiu";
-            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\Proiect_tp\Proiect_tp\example.csv");
+            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\experiment.csv");
             var list = new List<DataObject>(); //ObservableCollection<DataObject>();
             string[] data2 = oras.line6.Split(',');
             list.Add(new DataObject() { A = data2[0], B = data2[1], C = data2[2], D = data2[3], E = data2[4] });
@@ -126,7 +163,7 @@ namespace Proiect_tp
             oras.Show();
             oras.img.Source = new BitmapImage(new Uri("images/Timisoara.jpg", UriKind.Relative));
             oras.Localitate.Text = "Timisoara";
-            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\Proiect_tp\Proiect_tp\example.csv");
+            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\experiment.csv");
             var list = new List<DataObject>(); //ObservableCollection<DataObject>();
             string[] data2 = oras.line8.Split(',');
             list.Add(new DataObject() { A = data2[0], B = data2[1], C = data2[2], D = data2[3], E = data2[4] });
@@ -139,7 +176,7 @@ namespace Proiect_tp
             oras.Show();
             oras.img.Source = new BitmapImage(new Uri("images/Constanta.jpg", UriKind.Relative));
             oras.Localitate.Text = "Constanta";
-            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\Proiect_tp\Proiect_tp\example.csv");
+            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\experiment.csv");
             var list = new List<DataObject>(); //ObservableCollection<DataObject>();
             string[] data2 = oras.line12.Split(',');
             list.Add(new DataObject() { A = data2[0], B = data2[1], C = data2[2], D = data2[3], E = data2[4] });
@@ -153,11 +190,12 @@ namespace Proiect_tp
 
         private void Button_Click_7(object sender, RoutedEventArgs e)
         {
+         
             //Cluj
             oras.Show();
             oras.img.Source = new BitmapImage(new Uri("images/Cluj.jpg", UriKind.Relative));
             oras.Localitate.Text = "Cluj";
-            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\Proiect_tp\Proiect_tp\example.csv");
+            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\experiment.csv");
             var list = new List<DataObject>(); //ObservableCollection<DataObject>();
             string[] data2 = oras.line3.Split(',');
             list.Add(new DataObject() { A = data2[0], B = data2[1], C = data2[2], D = data2[3], E = data2[4] });
@@ -170,7 +208,7 @@ namespace Proiect_tp
             oras.Show();
             oras.img.Source = new BitmapImage(new Uri("images/SatuMare.jpg", UriKind.Relative));
             oras.Localitate.Text = "Satu Mare";
-            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\Proiect_tp\Proiect_tp\example.csv");
+            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\experiment.csv");
             var list = new List<DataObject>(); //ObservableCollection<DataObject>();
             string[] data2 = oras.line1.Split(',');
             list.Add(new DataObject() { A = data2[0], B = data2[1], C = data2[2], D = data2[3], E = data2[4] });
@@ -183,7 +221,7 @@ namespace Proiect_tp
             oras.Show();
             oras.img.Source = new BitmapImage(new Uri("images/Bucuresti.jpg", UriKind.Relative));
             oras.Localitate.Text = "Bucuresti";
-            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\Proiect_tp\Proiect_tp\example.csv");
+            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\experiment.csv");
             var list = new List<DataObject>(); //ObservableCollection<DataObject>();
             string[] data2 = oras.line11.Split(',');
             list.Add(new DataObject() { A = data2[0], B = data2[1], C = data2[2], D = data2[3], E=data2[4] });
@@ -196,20 +234,20 @@ namespace Proiect_tp
             oras.Show();
             oras.img.Source = new BitmapImage(new Uri("images/Craiova.jpg", UriKind.Relative));
             oras.Localitate.Text = "Craiova";
-            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\Proiect_tp\Proiect_tp\example.csv");
+            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\experiment.csv");
             var list = new List<DataObject>(); //ObservableCollection<DataObject>();
             string[] data2 = oras.line10.Split(',');
             list.Add(new DataObject() { A = data2[0], B = data2[1], C = data2[2], D = data2[3], E = data2[4] });
             oras.dataGrid1.ItemsSource = list;
         }
-
+      
         private void Button_Click_11(object sender, RoutedEventArgs e)
         {
             //Iasi
             oras.Show();
             oras.img.Source = new BitmapImage(new Uri("images/Iasi.jpg", UriKind.Relative));
             oras.Localitate.Text = "Iasi";
-            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\Proiect_tp\Proiect_tp\example.csv");
+            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\experiment.csv");
             var list = new List<DataObject>(); //ObservableCollection<DataObject>();
             string[] data2 = oras.line2.Split(',');
             list.Add(new DataObject() { A = data2[0], B = data2[1], C = data2[2], D = data2[3], E = data2[4] });
@@ -222,7 +260,7 @@ namespace Proiect_tp
             oras.Show();
             oras.img.Source = new BitmapImage(new Uri("images/TarguMures.jpg", UriKind.Relative));
             oras.Localitate.Text = "Targu Mures";
-            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\Proiect_tp\Proiect_tp\example.csv");
+            oras.dataGrid1.ItemsSource = ReadCSV(@"C:\Users\Cataa\Desktop\experiment.csv");
             var list = new List<DataObject>(); //ObservableCollection<DataObject>();
             string[] data2 = oras.line4.Split(',');
             list.Add(new DataObject() { A = data2[0], B = data2[1], C = data2[2], D = data2[3], E = data2[4] });
@@ -275,7 +313,8 @@ namespace Proiect_tp
 
         private void Button_Click_15(object sender, RoutedEventArgs e)
         {
-            w1.Show();
+            //w1.Show();
+            oras.LoadLineChartData();
         }
 
         private void Button_Click_16(object sender, RoutedEventArgs e)
@@ -285,25 +324,27 @@ namespace Proiect_tp
 
         private void Button_Click_17(object sender, RoutedEventArgs e)
         {
-            var py = Python.CreateEngine();
-            //try
-            //{
-                py.ExecuteFile("script.py");
-            //py.ExecuteFile("script2.py");
-           // }
-            //catch (Exception ex)
-            //{
-               // Console.WriteLine(
-                   //"Oops! We couldn't execute the script because of an exception: " + ex.Message);
-            //}
-            //MessageBox.Show("asd");
-
+            ok = 1;
+            // var py = Python.CreateEngine();
+            // py.ExecuteFile("script.py");
+            //MessageBox.Show("Datele din trecut au fost scrise in fisier");
+            worker.RunWorkerAsync();
         }
 
         private void Button_Click_18(object sender, RoutedEventArgs e)
         {
-            var py = Python.CreateEngine();
-            py.ExecuteFile("script2.py");
+            ok = 2;
+            worker.RunWorkerAsync();
+
         }
+
+        private void Button_Click_19(object sender, RoutedEventArgs e)
+        {
+            ok = 3;
+            //var py = Python.CreateEngine();
+            //py.ExecuteFile("script3.py");
+            worker.RunWorkerAsync();
+        }
+
     }
 }
